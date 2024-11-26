@@ -2,6 +2,33 @@
 
 Clone this repo into `.git/hooks` to use the hooks defined in this repository.
 
+## Note for Windows users
+
+If you're using WSL on Windows to work on the assignment, make sure that Git does not replace the Unix line endings with CRLF.
+You can configure git to preserve the line endings from the remote repository:
+
+```shell
+git config --local core.autocrlf input
+git config --local core.safecrlf true
+```
+
+Line ending normalization for text files is already enabled via [.gitattributes](https://github.com/se-ubt/ase24-assignment02/blob/main/.gitattributes).
+
+If you're still getting errors caused by the line endings, you can try the following (after configuring Git as outlined above):
+
+```shell
+git add --update --renormalize
+git checkout .
+```
+
+If that doesn't work, you can also exclicity convert all text files to use Unix line endings:
+
+```shell
+sudo apt-get install dos2unix
+find . -type f -not -path "./.git/*" -exec dos2unix {} \;
+git commit -a -m 'Convert line endings dos2unix'
+```
+
 ## Interface for the commit message hook
 
 The hook [`commit-msg`](commit-msg) calls the shell script [`scripts/commit-msg-hook`](./scripts/commit-msg-hook) and
